@@ -1,17 +1,21 @@
 const nodemailer = require('nodemailer');
 
-/**
- * Send a follow-up counselling email to a student.
- * Returns { success: true } or { success: false, error: string }
- */
 async function sendFollowupEmail({ studentEmail, studentName, counsellorName, note, followDate }) {
   try {
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
+      host:   'smtp.gmail.com',
+      port:   587,
+      secure: false,
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
       },
+      tls: {
+        rejectUnauthorized: false,
+      },
+      connectionTimeout: 10000,
+      greetingTimeout:   5000,
+      socketTimeout:     10000,
     });
 
     const formattedDate = new Date(followDate).toLocaleDateString('en-IN', {
