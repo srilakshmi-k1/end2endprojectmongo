@@ -3,19 +3,21 @@ const nodemailer = require('nodemailer');
 async function sendFollowupEmail({ studentEmail, studentName, counsellorName, note, followDate }) {
   try {
     const transporter = nodemailer.createTransport({
-      host:   'smtp.gmail.com',
-      port:   587,
-      secure: false,
+      service: 'gmail',
+      host:    'smtp.gmail.com',
+      port:    465,
+      secure:  true,
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
       },
       tls: {
         rejectUnauthorized: false,
+        minVersion: 'TLSv1',
       },
-      connectionTimeout: 10000,
-      greetingTimeout:   5000,
-      socketTimeout:     10000,
+      connectionTimeout: 30000,
+      greetingTimeout:   15000,
+      socketTimeout:     30000,
     });
 
     const formattedDate = new Date(followDate).toLocaleDateString('en-IN', {
