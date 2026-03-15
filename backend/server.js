@@ -69,14 +69,13 @@ setInterval(async () => {
   }
 }, 4 * 60 * 1000);
 
-// Auto seed branches and risk levels if empty
+// Auto seed
 const autoSeed = async () => {
   try {
     const Branch    = require('./models/Branch');
     const RiskLevel = require('./models/RiskLevel');
-
-    const bCount = await Branch.countDocuments();
-    const rCount = await RiskLevel.countDocuments();
+    const bCount    = await Branch.countDocuments();
+    const rCount    = await RiskLevel.countDocuments();
 
     if (bCount === 0) {
       await Branch.insertMany([
@@ -107,12 +106,11 @@ const autoSeed = async () => {
   }
 };
 
-app.listen(PORT, async () => {
-  console.log(`EduSafeGuard backend running on http://localhost:${PORT}`);
+// Start server — Render assigns PORT dynamically, do NOT hardcode it
+app.listen(PORT, '0.0.0.0', async () => {
+  console.log(`EduSafeGuard backend running on port ${PORT}`);
   console.log(`Mode: ${isProduction ? 'PRODUCTION' : 'DEVELOPMENT'}`);
-  console.log(`Health check: http://localhost:${PORT}/api/health`);
 
-  // Wait for MongoDB to connect then seed
   const mongoose = require('mongoose');
   const waitAndSeed = async (retries = 10) => {
     if (mongoose.connection.readyState === 1) {
