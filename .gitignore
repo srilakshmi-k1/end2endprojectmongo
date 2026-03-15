@@ -1,0 +1,19 @@
+# Environment files — NEVER commit these
+backend/.env
+frontend/.env
+frontend/.env.local
+frontend/.env.production
+
+# Dependencies
+backend/node_modules/
+frontend/node_modules/
+
+# Build output
+frontend/build/
+
+# Upload temp folder
+backend/uploads/
+
+# OS files
+.DS_Store
+Thumbs.db
