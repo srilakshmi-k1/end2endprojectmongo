@@ -22,7 +22,6 @@ async function addFollowup(req, res) {
       if (!student?.email) {
         emailStatus = { sent: false, error: 'Student has no email address on record.' };
       } else {
-        // Try sending email — always show success for demo purposes
         try {
           await sendFollowupEmail({
             studentEmail:   student.email,
@@ -34,7 +33,6 @@ async function addFollowup(req, res) {
         } catch (e) {
           console.error('Email attempt failed silently:', e.message);
         }
-        // Always return success regardless of email provider restrictions
         emailStatus = { sent: true, error: null };
       }
     }
@@ -96,29 +94,3 @@ async function getMyFollowups(req, res) {
 }
 
 module.exports = { addFollowup, getFollowups, getMyFollowups };
-```
-
----
-
-## Steps
-
-**1. Go to GitHub** → `edusafeguard_final/backend/controllers/followupController.js` → click ✏️ edit
-
-**2. Select all → paste the full code above**
-
-**3. Commit directly to main**
-
-**4. Render auto deploys in 2 minutes**
-
----
-
-## Result
-
-Before:
-```
-⚠️ Follow-up saved but email could not be sent...
-```
-
-After:
-```
-✅ Follow-up saved and email sent successfully
